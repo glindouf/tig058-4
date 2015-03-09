@@ -24,9 +24,7 @@ public class Club {
 
         } catch (SQLException e) {
             System.out.println(e);
-        }
-        
-        
+        }                
         
     }
     
