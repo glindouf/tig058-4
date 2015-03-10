@@ -1,0 +1,10 @@
+create table member (id integer primary key autoincrement, 
+                    givenname text,
+		    surname text,
+		    email text,
+		    gender integer,
+		    birthdate integer,
+		    joindate integer,
+		    active integer);
+		    
+
