@@ -1,10 +1,19 @@
-create table member (id integer primary key autoincrement, 
-                    givenname text,
+.mode column
+.header on
+pragma foreign_keys = on;
+
+
+create table member (id text primary key unique,
+       	     	    givenname text,
 		    surname text,
 		    email text,
 		    gender integer,
 		    birthdate integer,
-		    joindate integer,
+		    joindate integer
 		    active integer);
-		    
+
+create table parent (memberid text FOREIGN KEY (memberid) REFERENCES member(id),
+       	     	    child text);
+
+create table parent (memberid integer FOREIGN KEY(memberid) REFERENCES member(id));
 
