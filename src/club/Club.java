@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import club.manager.gui.Window;
 
 
 /**
@@ -21,6 +22,9 @@ public class Club {
      */
     public static void main(String[] args) {
         Connector c;
+        
+        Window.guiStart();
+        
         try {
             c = new Connector(DriverManager.getConnection("jdbc:sqlite:club.db"));
             Statement stmnt = c.connection.createStatement();

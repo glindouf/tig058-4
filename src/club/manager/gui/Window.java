@@ -1,5 +1,6 @@
 package club.manager.gui;
 
+import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,7 +8,7 @@ import javax.swing.JPanel;
 public class Window extends JFrame {   
     
     JButton reg = new JButton("Registervård");
-    JButton search = new JButton("Registervård");
+    JButton search = new JButton("Sökare");
     
     /*
     Passed contents of constructor to separate method "initUI"
@@ -21,7 +22,7 @@ public class Window extends JFrame {
     */
     public final void initUI()	{
      
-        JPanel panel = new JPanel();   
+        JPanel panel = new JPanel();
         
         setTitle("Club Manager");
         setSize(600, 400);
@@ -32,5 +33,18 @@ public class Window extends JFrame {
         panel.add(search);
         
         this.add(panel);
+    }
+    /*
+    Call to initialize GUI
+    */
+    public static void guiStart() {
+    EventQueue.invokeLater(new Runnable() {
+        
+            @Override
+            public void run() {
+                Window w = new Window();
+                w.setVisible(true);
+            }
+        });
     }
 }
