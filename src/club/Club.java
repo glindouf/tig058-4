@@ -1,6 +1,8 @@
 
 package club;
 
+import club.manager.gui.Window;
+
 import club.db.Connector;
 import club.domain.Member;
 import java.sql.DriverManager;
@@ -23,7 +25,8 @@ public class Club {
     public static void main(String[] args) {
         Connector c;
         
-        Window.guiStart();
+        Window.StartGUI();
+      
         
         try {
             c = new Connector(DriverManager.getConnection("jdbc:sqlite:club.db"));
