@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Container;
-import java.awt.BorderLayout:
+import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -26,8 +26,8 @@ public class Window extends JFrame {
         JButton registryBtn = new JButton("Registry");
         JButton searchBtn   = new JButton("Search");
                        
-        panel.add(registryBtn,BorderLayout.WEST);
-        panel.add(searchBtn,BorderLayout.EAST);
+        panel.add(registryBtn, BorderLayout.WEST);
+        panel.add(searchBtn, BorderLayout.EAST);
         
         add(panel);
         
