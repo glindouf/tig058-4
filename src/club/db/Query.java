@@ -1,13 +1,14 @@
 package club.db;
 
 import club.domain.Member;
-import club.domain.Team;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 /**
  *
@@ -15,8 +16,6 @@ import java.util.Hashtable;
  */
 public class Query {
     
-    static public Connector connector;
-
     public static Member memberFromRS(ResultSet rs) throws SQLException {
         Member m = new Member();
         m.setId(rs.getString("id"));
@@ -33,8 +32,8 @@ public class Query {
     public static Member getMemberWithId(String id) {
        Member m = new Member();
        try {
-           Statement stmnt = connector.connection.createStatement();
-           String query = String.format("SELECT * FROM member where id='%s'", id);
+           Statement stmnt = Connector.connection.createStatement();
+           String query = String.format("SELECT * FROM member WHERE id='%s'", id);
            ResultSet rs = stmnt.executeQuery(query);
            
            while (rs.next()) {
@@ -47,9 +46,9 @@ public class Query {
     }
     
     public static ArrayList<Member> getAllMembers() {    
-        ArrayList<Member> members = new ArrayList<Member>();
+        ArrayList<Member> members = new ArrayList<>();
         try{
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT * FROM member");
             
             ResultSet rs = stmnt.executeQuery(query);
@@ -65,10 +64,10 @@ public class Query {
     }
     
     public static ArrayList<String> getMemberTeamWithId(String id) {
-        ArrayList<String> team = new ArrayList<String>();
+        ArrayList<String> team = new ArrayList<>();
         try {
-            Statement stmnt = connector.connection.createStatement();
-            String query = String.format("SELECT team FROM team_members where mid='%s'", id);
+            Statement stmnt = Connector.connection.createStatement();
+            String query = String.format("SELECT team FROM team_members WHERE mid='%s'", id);
             
             ResultSet rs = stmnt.executeQuery(query);
             while (rs.next()) {
@@ -85,7 +84,7 @@ public class Query {
         boolean b = false;
         
         try {
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT id FROM parent WHERE id='%s'", id);
             
             ResultSet rs = stmnt.executeQuery(query);
@@ -103,7 +102,7 @@ public class Query {
         boolean b = false;
         
         try {
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT id FROM child WHERE id='%s'", id);
             
             ResultSet rs = stmnt.executeQuery(query);
@@ -119,7 +118,7 @@ public class Query {
         boolean b = false;
         
         try {
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT id FROM coach WHERE id='%s'", id);
             
             ResultSet rs = stmnt.executeQuery(query);
@@ -132,9 +131,9 @@ public class Query {
     }
     
     public static ArrayList<Member> getMembersForTeam(String team) {
-        ArrayList<Member> tm = new ArrayList<Member>();
+        ArrayList<Member> tm = new ArrayList<>();
         try {
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT * FROM member "
                     + "JOIN (team_members) ON (team='%s' AND mid=member.id)"
                     + "WHERE member.id NOT IN (select id from parent) AND"
@@ -151,11 +150,11 @@ public class Query {
     }
     
     public static ArrayList<Member> getCoachesForTeam(String team) {
-        ArrayList<Member> cm = new ArrayList<Member>();
+        ArrayList<Member> cm = new ArrayList<>();
         try {
-            Statement stmnt = connector.connection.createStatement();
-            String query = String.format("SELECT * from member "
-                    + "join (select mid from coach where team='%s') on (coach.mid=member.id)", team);
+            Statement stmnt = Connector.connection.createStatement();
+            String query = String.format("SELECT * FROM member "
+                    + "JOIN (SELECT id FROM coach WHERE team='%s') AS c ON (c.id=member.id)", team);
             
             ResultSet rs = stmnt.executeQuery(query);
             while (rs.next()) {
@@ -167,26 +166,26 @@ public class Query {
         return cm;
     }
     
-    public static Dictionary getMembersAndCoachFromTeam(String team) {
-        Dictionary d = new Hashtable();
+    public static Map<String, ArrayList<Member>> getMembersAndCoachFromTeam(String team) {
+        Map<String,ArrayList<Member>> map = new HashMap<>();
         
-        ArrayList<Member> members = new ArrayList<Member>();
-        ArrayList<Member> coaches = new ArrayList<Member>();
+        ArrayList<Member> members;
+        ArrayList<Member> coaches;
         
         members = getMembersForTeam(team);
         coaches = getCoachesForTeam(team);
         
-        d.put("members", members);
-        d.put("coaches", coaches);
+        map.put("members", members);
+        map.put("coaches", coaches);
         
-        return d;
+        return map;
     }
     
     public static ArrayList<Member> getParentsForMember (String id) {
-        ArrayList<Member> am = new ArrayList<Member>();
+        ArrayList<Member> am = new ArrayList<>();
         
         try {
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT member.* FROM member" 
                     + " join(select parent.id from parent where parent.childid='%s') as pid"
                     + " on (pid.id=member.id)", id);
@@ -202,10 +201,10 @@ public class Query {
     }
     
     public static ArrayList<Member> getChildrenForMember (String id) {
-        ArrayList<Member> am = new ArrayList<Member>();
+        ArrayList<Member> am = new ArrayList<>();
         
         try {
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT member.* FROM member" 
                     + " join(select child.id from child where child.parentid='%s') as cid"
                     + " on (cid.id=member.id)", id);
@@ -221,10 +220,10 @@ public class Query {
     }
     
     public static ArrayList<String> getCoachTeams (String id) {
-        ArrayList<String> ts = new ArrayList<String>();
+        ArrayList<String> ts = new ArrayList<>();
         
         try {
-            Statement stmnt = connector.connection.createStatement();
+            Statement stmnt = Connector.connection.createStatement();
             String query = String.format("SELECT distinct cid.team FROM member" 
                     + " join(select coach.id from coach where coach.id='%s') as cid"
                     + " on (cid.id=member.id)", id);
@@ -240,33 +239,34 @@ public class Query {
     }
        
     
-    public static Dictionary getAllMemberId(String id) {
-        Dictionary d = new Hashtable();
-        Member m = new Member();
-        ArrayList<String> teams = null;
-        ArrayList<Member> children = null;
-        ArrayList<Member> parents = null;
-        ArrayList<String> coacht = null;
+    public static <T> Map<String,ArrayList<T>> getAllMemberId(String id) {
+        Map<String,ArrayList<T>> map = new HashMap<>();
+        
+        Member m;
+        ArrayList<String> teams;
+        ArrayList<Member> children;
+        ArrayList<Member> parents;
+        ArrayList<String> coacht;
         
         
         m = getMemberWithId(id);
         teams = getMemberTeamWithId(id);
         
-        d.put("member", m);
-        d.put("team", teams);
+        map.put("member", m);
+        map.put("team", teams);
         
         if (isChild(id)) {
             parents = getParentsForMember(id);
-            d.put("parents", parents);
+            map.put("parents", parents);
         } else if (isParent(id)) {
             children = getChildrenForMember(id);
-            d.put("children", children);
+            map.put("children", children);
         } else if (isCoach(id)) {
             coacht = getCoachTeams(id);           
-            d.put("coachteams", coacht);        
+            map.put("coachteams", coacht);        
         }                
         
-        return d;
+        return map;
     }
     
 }
