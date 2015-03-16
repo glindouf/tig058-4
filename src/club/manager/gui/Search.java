@@ -1,12 +1,10 @@
 
 package club.manager.gui;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
  *
@@ -29,9 +27,9 @@ public class Search extends JFrame implements ActionListener{
     public final void initUI() {   
         setTitle("Search");
         setVisible(true); 
-        setSize(600, 400);
+        //setSize(600, 400);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                  
     }
     
