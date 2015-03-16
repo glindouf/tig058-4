@@ -30,7 +30,8 @@ create table parent (id text,
 		    FOREIGN KEY (childid) REFERENCES member(id) on delete cascade);
 
 create table coach (id text,
-		   FOREIGN KEY (id) REFERENCES member(id) on delete cascade);
+       	     	   team text,
+		   FOREIGN KEY (id) REFERENCES member(id) on delete cascade);		   
 		   
 create table child (id text, 
        	     	   parentid text,
@@ -61,7 +62,7 @@ insert into team_members values('P00', '000101-9213');
 insert into team_members values('F01', '010101-3629');
 insert into team_members values('H', '880912-2132');
 
-insert into coach values ('660123-6123');
+insert into coach values ('660123-6123', 'H');
 
 insert into parent values ('660123-6123', '880912-2132');
 insert into parent values ('880912-2132','000101-9213');
