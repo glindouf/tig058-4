@@ -134,33 +134,33 @@ public class Query {
         return am;
     }
     
-    public static ArrayList<Member> getCoachTeams (String id) {
-        ArrayList<Member> am = new ArrayList<Member>();
+    public static ArrayList<String> getCoachTeams (String id) {
+        ArrayList<String> ts = new ArrayList<String>();
         
         try {
             Statement stmnt = connector.connection.createStatement();
-            String query = String.format("SELECT member.* FROM member" 
+            String query = String.format("SELECT distinct cid.team FROM member" 
                     + " join(select coach.id from coach where coach.id='%s') as cid"
-                    + " on (pid.id=member.id)", id);
+                    + " on (cid.id=member.id)", id);
    
             ResultSet rs = stmnt.executeQuery(query);
             while (rs.next()) {
-                am.add(memberFromRS(rs));
+                ts.add(rs.getString("team"));
             }
         } catch (SQLException e) {
             System.out.println(e);
         }        
-        return am;
+        return ts;
     }
        
     
     public static Dictionary getAllMemberId(String id) {
         Dictionary d = new Hashtable();
         Member m = new Member();
-        Team t = new Team();
-        ArrayList<Member> children;
-        ArrayList<Member> parents;
-        ArrayList<Member> coach;
+        ArrayList<String> teams = null;
+        ArrayList<Member> children = null;
+        ArrayList<Member> parents = null;
+        ArrayList<String> coacht = null;
         
         
         m = getMemberWithId(id);
@@ -168,16 +168,16 @@ public class Query {
         if (isChild(id)) {
             parents = getParentsForMember(id);
         } else if (isParent(id)) {
-            //children = getChildrenForMember(id);
+            children = getChildrenForMember(id);
         } else if (isCoach(id)) {
-            //coach = getCoachTeams(id);
+            coacht = getCoachTeams(id);
         }
         
         d.put("member", m);
-        d.put("team", t);
-        d.put("parents", p);
-        d.put("children", c);
-        d.put("coach", c);
+        d.put("team", teams);
+        d.put("parents", parents);
+        d.put("children", children);
+        d.put("coachteams", coacht);
         
         
         return d;
