@@ -134,13 +134,13 @@ public class Query {
         return am;
     }
     
-    public static ArrayList<Member> getParentsForMember (String id) {
+    public static ArrayList<Member> getCoachTeams (String id) {
         ArrayList<Member> am = new ArrayList<Member>();
         
         try {
             Statement stmnt = connector.connection.createStatement();
             String query = String.format("SELECT member.* FROM member" 
-                    + " join(select parent.id from parent where parent.childid='%s') as pid"
+                    + " join(select coach.id from coach where coach.id='%s') as cid"
                     + " on (pid.id=member.id)", id);
    
             ResultSet rs = stmnt.executeQuery(query);
