@@ -46,6 +46,23 @@ public class Query {
        return m;
     }
     
+    public static ArrayList<Member> getAllMembers() {    
+        ArrayList<Member> members = new ArrayList<Member>();
+        try{
+            Statement stmnt = connector.connection.createStatement();
+            String query = String.format("SELECT * FROM member");
+            
+            ResultSet rs = stmnt.executeQuery(query);
+            while (rs.next()) {
+                members.add(memberFromRS(rs));
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+        return members;
+    }
     
     public static ArrayList<String> getMemberTeamWithId(String id) {
         ArrayList<String> team = new ArrayList<String>();
@@ -114,6 +131,25 @@ public class Query {
         return b;
     }
     
+    public static ArrayList<Member> getMembersForTeam(String team) {
+        ArrayList<Member> tm = new ArrayList<Member>();
+        try {
+            Statement stmnt = connector.connection.createStatement();
+            String query = String.format("SELECT * FROM member "
+                    + "JOIN (team_members) ON (team='%s' AND mid=member.id)"
+                    + "WHERE member.id NOT IN (select id from parent) AND"
+                    + "(select id from coach)", team);
+            
+            ResultSet rs = stmnt.executeQuery(query);
+            while (rs.next()) {
+                tm.add(memberFromRS(rs));
+            }            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return tm;
+    }
+    
     public static ArrayList<Member> getCoachesForTeam(String team) {
         ArrayList<Member> cm = new ArrayList<Member>();
         try {
@@ -129,6 +165,21 @@ public class Query {
             System.out.println(e);
         }
         return cm;
+    }
+    
+    public static Dictionary getMembersAndCoachFromTeam(String team) {
+        Dictionary d = new Hashtable();
+        
+        ArrayList<Member> members = new ArrayList<Member>();
+        ArrayList<Member> coaches = new ArrayList<Member>();
+        
+        members = getMembersForTeam(team);
+        coaches = getCoachesForTeam(team);
+        
+        d.put("members", members);
+        d.put("coaches", coaches);
+        
+        return d;
     }
     
     public static ArrayList<Member> getParentsForMember (String id) {

@@ -86,7 +86,7 @@ public class Member {
     
     public String toString() {
         return String.format(
-                "%s\n%s\n%s\n%s\n%d\n%d\n%d\n%b",
+                "\nid:\t%s\ngivenname:\t%s\nsurname:\t%s\nemail:\t%s\ngender:\t%d\nbirthdate:\t%d\njoindate:\t%d\nactive:\t%b",
                 this.id,
                 this.givenname,
                 this.surname,
