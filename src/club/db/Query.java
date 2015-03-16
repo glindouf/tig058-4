@@ -46,6 +46,24 @@ public class Query {
        return m;
     }
     
+    
+    public static ArrayList<String> getMemberTeamWithId(String id) {
+        ArrayList<String> team = new ArrayList<String>();
+        try {
+            Statement stmnt = connector.connection.createStatement();
+            String query = String.format("SELECT team FROM team_members where mid='%s'", id);
+            
+            ResultSet rs = stmnt.executeQuery(query);
+            while (rs.next()) {
+                team.add(rs.getString("team"));
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return team;
+    }
+    
     public static boolean isParent (String id) {
         boolean b = false;
         
@@ -94,6 +112,23 @@ public class Query {
             System.out.println(e);
         }
         return b;
+    }
+    
+    public static ArrayList<Member> getCoachesForTeam(String team) {
+        ArrayList<Member> cm = new ArrayList<Member>();
+        try {
+            Statement stmnt = connector.connection.createStatement();
+            String query = String.format("SELECT * from member "
+                    + "join (select mid from coach where team='%s') on (coach.mid=member.id)", team);
+            
+            ResultSet rs = stmnt.executeQuery(query);
+            while (rs.next()) {
+                cm.add(memberFromRS(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return cm;
     }
     
     public static ArrayList<Member> getParentsForMember (String id) {
@@ -164,21 +199,21 @@ public class Query {
         
         
         m = getMemberWithId(id);
-        
-        if (isChild(id)) {
-            parents = getParentsForMember(id);
-        } else if (isParent(id)) {
-            children = getChildrenForMember(id);
-        } else if (isCoach(id)) {
-            coacht = getCoachTeams(id);
-        }
+        teams = getMemberTeamWithId(id);
         
         d.put("member", m);
         d.put("team", teams);
-        d.put("parents", parents);
-        d.put("children", children);
-        d.put("coachteams", coacht);
         
+        if (isChild(id)) {
+            parents = getParentsForMember(id);
+            d.put("parents", parents);
+        } else if (isParent(id)) {
+            children = getChildrenForMember(id);
+            d.put("children", children);
+        } else if (isCoach(id)) {
+            coacht = getCoachTeams(id);           
+            d.put("coachteams", coacht);        
+        }                
         
         return d;
     }
