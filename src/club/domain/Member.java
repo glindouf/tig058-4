@@ -1,7 +1,4 @@
-
 package club.domain;
-
-import java.util.Calendar;
 
 /**
  *
@@ -14,7 +11,7 @@ public class Member {
         Female 
     };
     
-    private int id;
+    private String id;
     private String givenname;
     private String surname;
     private String email;
@@ -23,11 +20,11 @@ public class Member {
     private long joindate;
     private boolean active;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -87,6 +84,18 @@ public class Member {
         this.active = active;
     }
     
-    
+    public String toString() {
+        return String.format(
+                "%s\n%s\n%s\n%s\n%d\n%d\n%d\n%b",
+                this.id,
+                this.givenname,
+                this.surname,
+                this.email,
+                this.gender,
+                this.birthdate,
+                this.joindate,
+                this.active
+        );
+    }
     
 }
