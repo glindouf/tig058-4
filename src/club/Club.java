@@ -21,7 +21,7 @@ public class Club {
      */
     public static void main(String[] args) {
         try {
-            Query.connector = new Connector(DriverManager.getConnection("jdbc:sqlite:club.db")); 
+            Connector.connection = DriverManager.getConnection("jdbc:sqlite:club.db"); 
             Member m = Query.getMemberWithId("000101-9213");
             
             System.out.println(Query.isParent(m.getId()));
