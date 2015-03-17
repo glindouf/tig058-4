@@ -5,7 +5,6 @@
  */
 package club.manager.gui.view;
 
-import club.domain.Member;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,13 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class Register extends javax.swing.JFrame {
 
-    public final Member model;
+    public final club.domain.register.Register model;
     
     /**
      * Creates new form Register
      */
     public Register() {
-        this.model = new Member();
+        this.model = new club.domain.register.Register();
         initComponents();
     }
 
