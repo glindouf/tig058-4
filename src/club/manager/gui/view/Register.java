@@ -5,16 +5,24 @@
  */
 package club.manager.gui.view;
 
+import club.domain.Member;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author phcr
  */
 public class Register extends javax.swing.JFrame {
 
+    public final Member model;
+    
     /**
      * Creates new form Register
      */
     public Register() {
+        this.model = new Member();
         initComponents();
     }
 
@@ -77,6 +85,11 @@ public class Register extends javax.swing.JFrame {
         FemaleRadioField.setText("Female");
 
         submitButton.setText("Submit");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         updateButton.setText("Update");
 
@@ -188,13 +201,24 @@ public class Register extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
-        // TODO add your handling code here:
+        this.model.setId(evt.getActionCommand());  
+        System.out.println("Set id");
     }//GEN-LAST:event_idFieldActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        System.out.println("Submit");
+        try {
+            club.manager.gui.controller.Register.RegisterMember(this.model);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     
     public static void startGUI() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Register().setVisible(true);
             }

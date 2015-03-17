@@ -13,35 +13,34 @@ import club.domain.Member;
  * @author phcr
  */
 public class Register {
-    
-    public static Member model;
-    
-    public static boolean validateModel() {
-        return (model.getId() != null && !model.getId().equals("") ||
-                model.getGivenname() != null && !model.getGivenname().equals("") ||
-                model.getSurname() != null && !model.getSurname().equals("") ||
-                model.getEmail() != null && !model.getEmail().equals("") ||
-                model.getGender() > -1 ||
-                model.getBirthdate() > -1 ||
-                model.getJoindate() > -1
+        
+    public static boolean validateModel(Member model) {
+        return (
+                (model.getId() != null && !model.getId().equals("")) &&
+                (model.getGivenname() != null && !model.getGivenname().equals("")) &&
+                (model.getSurname() != null && !model.getSurname().equals("")) &&
+                (model.getEmail() != null && !model.getEmail().equals("")) &&
+                (model.getGender() > -1) &&
+                (model.getBirthdate() > -1) &&
+                (model.getJoindate() > -1)
                 );
     }
     
-    public static void RegisterMember() throws Exception {
-        if (validateModel()) {
+    public static void RegisterMember(Member model) throws Exception {
+        if (validateModel(model)) {
             
         } else {
-            Exception InvalidModelException = null; // Will add the codes later
-            throw InvalidModelException;
+            Exception ex = new Exception("All fields must have values", null); // Will add the codes later
+            throw ex;
         }
     }
     
-    public static void UpdateMember() throws Exception {
-        if (validateModel()) {
+    public static void UpdateMember(Member model) throws Exception {
+        if (validateModel(model)) {
             
         } else {
-            Exception InvalidModelException = null;
-            throw InvalidModelException;
+            Exception ex = new Exception("All fields must have values", null); // Will add the codes later
+            throw ex;
         }
     }
     
