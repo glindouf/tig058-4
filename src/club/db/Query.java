@@ -45,6 +45,22 @@ public class Query {
        return m;
     }
     
+    public static ArrayList<Member> getMemberWithSurname(String surname) {
+        ArrayList<Member> am = new ArrayList<>();
+        try {
+            Statement stmnt = Connector.connection.createStatement();
+            String query = String.format("SELECT * FROM member WHERE surname='%s'", surname);
+            ResultSet rs = stmnt.executeQuery(query);
+            
+            while (rs.next()) {
+                am.add(memberFromRS(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return am;
+    }
+    
     public static ArrayList<Member> getAllMembers() {    
         ArrayList<Member> members = new ArrayList<>();
         try{
@@ -166,21 +182,6 @@ public class Query {
         return cm;
     }
     
-    public static Map<String, ArrayList<Member>> getMembersAndCoachFromTeam(String team) {
-        Map<String,ArrayList<Member>> map = new HashMap<>();
-        
-        ArrayList<Member> members;
-        ArrayList<Member> coaches;
-        
-        members = getMembersForTeam(team);
-        coaches = getCoachesForTeam(team);
-        
-        map.put("members", members);
-        map.put("coaches", coaches);
-        
-        return map;
-    }
-    
     public static ArrayList<Member> getParentsForMember (String id) {
         ArrayList<Member> am = new ArrayList<>();
         
@@ -237,36 +238,4 @@ public class Query {
         }        
         return ts;
     }
-       
-    
-    public static <T> Map<String,ArrayList<T>> getAllMemberId(String id) {
-        Map<String,ArrayList<T>> map = new HashMap<>();
-        
-        Member m;
-        ArrayList<String> teams;
-        ArrayList<Member> children;
-        ArrayList<Member> parents;
-        ArrayList<String> coacht;
-        
-        
-        m = getMemberWithId(id);
-        teams = getMemberTeamWithId(id);
-        
-        map.put("member", m);
-        map.put("team", teams);
-        
-        if (isChild(id)) {
-            parents = getParentsForMember(id);
-            map.put("parents", parents);
-        } else if (isParent(id)) {
-            children = getChildrenForMember(id);
-            map.put("children", children);
-        } else if (isCoach(id)) {
-            coacht = getCoachTeams(id);           
-            map.put("coachteams", coacht);        
-        }                
-        
-        return map;
-    }
-    
 }
