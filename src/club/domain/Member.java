@@ -11,6 +11,12 @@ public class Member {
         Female 
     };
     
+    public static enum Role {
+        Child,
+        Parent,
+        Coach
+    }
+    
     private String id;
     private String givenname;
     private String surname;
@@ -18,7 +24,7 @@ public class Member {
     private int gender;
     private long birthdate;
     private long joindate;
-    private boolean active;
+    private boolean active = false;
 
     public String getId() {
         return id;
