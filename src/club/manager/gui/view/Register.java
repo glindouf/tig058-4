@@ -5,6 +5,12 @@
  */
 package club.manager.gui.view;
 
+import club.domain.Member;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,13 +22,19 @@ import javax.swing.JOptionPane;
 public class Register extends javax.swing.JFrame {
 
     public final club.domain.register.Register model;
+    public SimpleDateFormat df;
     
     /**
      * Creates new form Register
      */
     public Register() {
         this.model = new club.domain.register.Register();
+        this.df = new SimpleDateFormat("yyyy-MM-dd");
         initComponents();
+    }
+    
+    public void displayError(String text) {
+        JOptionPane.showMessageDialog(this, text,"Error",JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -34,6 +46,9 @@ public class Register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -54,6 +69,7 @@ public class Register extends javax.swing.JFrame {
         activeField = new javax.swing.JCheckBox();
         submitButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,9 +95,55 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
+        nameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameFieldActionPerformed(evt);
+            }
+        });
+
+        surnameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                surnameFieldActionPerformed(evt);
+            }
+        });
+
+        emailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailFieldActionPerformed(evt);
+            }
+        });
+
         maleRadioField.setText("Male");
+        maleRadioField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maleRadioFieldActionPerformed(evt);
+            }
+        });
 
         FemaleRadioField.setText("Female");
+        FemaleRadioField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FemaleRadioFieldActionPerformed(evt);
+            }
+        });
+
+        birthdateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                birthdateFieldActionPerformed(evt);
+            }
+        });
+
+        joindateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joindateFieldActionPerformed(evt);
+            }
+        });
+
+        activeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activeFieldActionPerformed(evt);
+            }
+        });
 
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +153,8 @@ public class Register extends javax.swing.JFrame {
         });
 
         updateButton.setText("Update");
+
+        jLabel10.setText("Role");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,9 +211,13 @@ public class Register extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(89, 89, 89)
                                         .addComponent(updateButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                                         .addComponent(submitButton)))))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +257,9 @@ public class Register extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(activeField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(updateButton))
@@ -201,17 +271,59 @@ public class Register extends javax.swing.JFrame {
 
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         this.model.setId(evt.getActionCommand());  
-        System.out.println("Set id");
     }//GEN-LAST:event_idFieldActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        System.out.println("Submit");
         try {
             club.manager.gui.controller.Register.RegisterMember(this.model);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            this.displayError(ex.getMessage());            
         }
     }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
+        this.model.setGivenname(evt.getActionCommand());
+    }//GEN-LAST:event_nameFieldActionPerformed
+
+    private void surnameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surnameFieldActionPerformed
+        this.model.setSurname(evt.getActionCommand());
+    }//GEN-LAST:event_surnameFieldActionPerformed
+
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+        this.model.setEmail(evt.getActionCommand());
+    }//GEN-LAST:event_emailFieldActionPerformed
+
+    private void birthdateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdateFieldActionPerformed
+        try {
+            Date d = this.df.parse(evt.getActionCommand());
+            long time = d.getTime();
+            this.model.setBirthdate(time);
+        } catch (ParseException ex) {
+            this.displayError("Invalid date format, the format is: yyyy-MM-dd");            
+        }        
+    }//GEN-LAST:event_birthdateFieldActionPerformed
+
+    private void joindateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joindateFieldActionPerformed
+        try {
+            Date d = this.df.parse(evt.getActionCommand());
+            long time = d.getTime();
+            this.model.setJoindate(time);
+        } catch (ParseException ex) {
+            this.displayError("Invalid date format, the format is: yyyy-MM-dd");            
+        }
+    }//GEN-LAST:event_joindateFieldActionPerformed
+
+    private void activeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activeFieldActionPerformed
+        this.model.setActive(!this.model.isActive());
+    }//GEN-LAST:event_activeFieldActionPerformed
+
+    private void FemaleRadioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FemaleRadioFieldActionPerformed
+        this.model.setGender(Member.Gender.Female.ordinal());
+    }//GEN-LAST:event_FemaleRadioFieldActionPerformed
+
+    private void maleRadioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleRadioFieldActionPerformed
+        this.model.setGender(Member.Gender.Male.ordinal());
+    }//GEN-LAST:event_maleRadioFieldActionPerformed
 
     
     public static void startGUI() {
@@ -228,9 +340,11 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JRadioButton FemaleRadioField;
     private javax.swing.JCheckBox activeField;
     private javax.swing.JFormattedTextField birthdateField;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField emailField;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -239,6 +353,8 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JFormattedTextField joindateField;
     private javax.swing.JRadioButton maleRadioField;
     private javax.swing.JTextField nameField;
