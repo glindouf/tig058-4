@@ -1,6 +1,7 @@
 package club.db;
 
 import club.domain.Member;
+import club.domain.register.Register;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,12 +27,27 @@ public class Query {
     }
     
     /** Insert **/    
-    public static boolean insertMember(Member m, int[] roles, String team) {
-        
+    public static boolean insertMember(Register m) {
+        try {
+            Statement stmnt = Connector.connection.createStatement();
+            int active = (m.isActive()) ? 1 : 0;
+            String insertquery = String.format("INSERT INTO member values(%s,%s,%s,%s,%d,%d,%d,%d)",
+                    m.getId(), m.getGivenname(), m.getSurname(), m.getEmail(), m.getGender(), m.getBirthdate(), m.getJoindate(), active);
+            
+            String teamquery = String.format("INSERT INTO team_members values(%s,%s)", m.getTeam(), m.getId());
+            stmnt.executeQuery(insertquery);
+            
+            
+            
+            
+            
+        } catch (SQLException e) {
+            return false;
+        }
         return true;
     }
     /** Update **/
-    public static boolean updateMember(Member m, int[] roles, String team) {        
+    public static boolean updateMember(Register m) {        
         try {
             int active = (m.isActive()) ? 1 : 0;
             Statement stmnt = Connector.connection.createStatement();

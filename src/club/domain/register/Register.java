@@ -13,6 +13,10 @@ import club.domain.Member;
  */
 public class Register extends Member {
     
+    public Register () {
+        super();
+    }
+     
     private int[] roles;
     private String team;
 
@@ -30,6 +34,18 @@ public class Register extends Member {
 
     public void setTeam(String team) {
         this.team = team;
+    }
+    
+    public boolean validate () {
+        return (
+                (this.getId() != null && !this.getId().equals("")) &&
+                (this.getGivenname() != null && !this.getGivenname().equals("")) &&
+                (this.getSurname() != null && !this.getSurname().equals("")) &&
+                (this.getEmail() != null && !this.getEmail().equals("")) &&
+                (this.getGender() > -1) &&
+                (this.getBirthdate() > -1) &&
+                (this.getJoindate() > -1)                
+                );
     }
         
 }
