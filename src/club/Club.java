@@ -6,6 +6,7 @@ import club.manager.gui.Window;
 import club.db.Connector;
 import club.db.Query;
 import club.domain.Member;
+import club.manager.gui.Manager;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class Club {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Window.StartGUI();
         try {
-            Connector.connection = DriverManager.getConnection("jdbc:sqlite:club.db");            
+            Connector.connection = DriverManager.getConnection("jdbc:sqlite:club.db");         
+            Manager.start();
         } catch (SQLException e) {
             System.out.println(e);
         }            
