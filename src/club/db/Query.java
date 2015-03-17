@@ -5,10 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
 
 /**
  *
@@ -28,6 +24,31 @@ public class Query {
         m.setActive(rs.getBoolean("active"));
         return m;
     }
+    
+    /** Insert **/    
+    public static boolean insertMember(Member m, int[] roles, String team) {
+        
+        return true;
+    }
+    /** Update **/
+    public static boolean updateMember(Member m, int[] roles, String team) {        
+        try {
+            int active = (m.isActive()) ? 1 : 0;
+            Statement stmnt = Connector.connection.createStatement();
+            String query = String.format("UPDATE member SET givenname='%s', "
+                    + "surname='%s', email='%s', gender=%d, birthdate=%d, "
+                    + "joindate=%s, active=%d WHERE id = '%s'",
+                    m.getGivenname(), m.getSurname(),
+                    m.getEmail(), m.getGender(), m.getBirthdate(), 
+                    m.getJoindate(), active, m.getId());
+        } catch (SQLException e) {            
+            return false;            
+        }        
+        return true;
+    }
+    
+    
+    /** Search **/
     
     public static Member getMemberWithId(String id) {
        Member m = new Member();
