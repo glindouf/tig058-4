@@ -35,11 +35,7 @@ public class Query {
                     m.getId(), m.getGivenname(), m.getSurname(), m.getEmail(), m.getGender(), m.getBirthdate(), m.getJoindate(), active);
             
             String teamquery = String.format("INSERT INTO team_members values(%s,%s)", m.getTeam(), m.getId());
-            stmnt.executeQuery(insertquery);
-            
-            
-            
-            
+            stmnt.executeQuery(insertquery);                                                
             
         } catch (SQLException e) {
             return false;
