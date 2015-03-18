@@ -1,6 +1,6 @@
 package club.manager.gui;
 
-import club.manager.gui.view.Register;
+import club.manager.gui.view.Main;
 
 /**
  *
@@ -9,7 +9,7 @@ import club.manager.gui.view.Register;
 public class Manager {
     
     public static void start() {
-        Register.startGUI();
+        Main.startGUI();
     }
     
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package club.manager.gui.view;
 
 import club.db.Query;
@@ -17,25 +12,39 @@ import javax.swing.JOptionPane;
  *
  * @author phcr
  */
-public class Register extends javax.swing.JFrame {
+public class Register extends javax.swing.JPanel {
 
-    public final club.domain.register.Register model;
+    public club.domain.register.Register model;
     public SimpleDateFormat df;
-    
+
     /**
      * Creates new form Register
      */
-    public Register() {
+    public Register() {        
         this.model = new club.domain.register.Register();
         this.df = new SimpleDateFormat("yyyy-MM-dd");
         initComponents();
     }
     
+    public void toggleRoles(Integer role) {
+        int index = this.model.getRoles().indexOf(role);
+        if (index == -1) {                
+            this.model.getRoles().add(role);
+        } else {
+            this.model.getRoles().remove(index);        
+        }        
+        System.out.println(this.model.getRoles());
+    }
+    
+    /**
+     * Displays error messages.
+     * @param text - The text to display in an JOptionPane.
+     */
     public void displayError(String text) {
         JOptionPane.showMessageDialog(this, text,"Error",JOptionPane.ERROR_MESSAGE);
     }
     
-    /**
+     /**
      * Redraws the ComboBox with teams, with a brand new collection of teams.
      */
     public void redrawTeamSelect() {
@@ -44,6 +53,24 @@ public class Register extends javax.swing.JFrame {
         for (String s : Query.getAllTeams()) {
             teamSelect.addItem(s);
         }
+    }
+    
+    public void resetForm() {
+        this.model = new club.domain.register.Register();
+        
+        idField.setText("");
+        givennameField.setText("");
+        surnameField.setText("");
+        emailField.setText("");
+        maleRadioButton.setSelected(false);
+        femaleRadioButton.setSelected(false);
+        birthdateField.setText("");
+        joindateField.setText("");
+        activeCheckBox.setSelected(false);
+        childCheckBox.setSelected(false);
+        parentCheckBox.setSelected(false);
+        coachCheckBox.setSelected(false);
+        redrawTeamSelect();        
     }
 
     /**
@@ -55,9 +82,11 @@ public class Register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
         buttonGroup1 = new javax.swing.ButtonGroup();
+        submitButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -67,101 +96,29 @@ public class Register extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
-        nameField = new javax.swing.JTextField();
+        givennameField = new javax.swing.JTextField();
         surnameField = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
-        maleRadioField = new javax.swing.JRadioButton();
-        FemaleRadioField = new javax.swing.JRadioButton();
-        birthdateField = new javax.swing.JFormattedTextField();
-        joindateField = new javax.swing.JFormattedTextField();
-        activeField = new javax.swing.JCheckBox();
-        submitButton = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        childCheckbox = new javax.swing.JCheckBox();
-        parentCheckbox = new javax.swing.JCheckBox();
-        coachCheckbox = new javax.swing.JCheckBox();
-        jLabel11 = new javax.swing.JLabel();
+        birthdateField = new javax.swing.JTextField();
+        joindateField = new javax.swing.JTextField();
+        activeCheckBox = new javax.swing.JCheckBox();
+        childCheckBox = new javax.swing.JCheckBox();
+        parentCheckBox = new javax.swing.JCheckBox();
+        coachCheckBox = new javax.swing.JCheckBox();
         teamSelect = new javax.swing.JComboBox();
-        jLabel12 = new javax.swing.JLabel();
-        newTeamField = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        addTeamField = new javax.swing.JTextField();
         addTeamButton = new javax.swing.JButton();
+        maleRadioButton = new javax.swing.JRadioButton();
+        femaleRadioButton = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jTextField5.setText("jTextField5");
 
-        jLabel2.setText("Person number");
+        jTextField8.setText("jTextField8");
 
-        jLabel3.setText("Givenname");
-
-        jLabel4.setText("Surname");
-
-        jLabel5.setText("Email");
-
-        jLabel6.setText("Gender");
-
-        jLabel7.setText("Birthdate");
-
-        jLabel8.setText("Joindate");
-
-        jLabel9.setText("Active");
-
-        idField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idFieldActionPerformed(evt);
-            }
-        });
-
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
-            }
-        });
-
-        surnameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                surnameFieldActionPerformed(evt);
-            }
-        });
-
-        emailField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(maleRadioField);
-        maleRadioField.setText("Male");
-        maleRadioField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maleRadioFieldActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(FemaleRadioField);
-        FemaleRadioField.setText("Female");
-        FemaleRadioField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FemaleRadioFieldActionPerformed(evt);
-            }
-        });
-
-        birthdateField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                birthdateFieldActionPerformed(evt);
-            }
-        });
-
-        joindateField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                joindateFieldActionPerformed(evt);
-            }
-        });
-
-        activeField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                activeFieldActionPerformed(evt);
-            }
-        });
+        jTextField9.setText("jTextField9");
 
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -170,42 +127,97 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Role");
+        jLabel1.setText("ID");
 
-        childCheckbox.setText("Child");
-        childCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                childCheckboxActionPerformed(evt);
+        jLabel2.setText("Givenname");
+
+        jLabel3.setText("Surname");
+
+        jLabel4.setText("Email");
+
+        jLabel5.setText("Gender");
+
+        jLabel6.setText("Birthdate");
+
+        jLabel7.setText("Joindate");
+
+        jLabel8.setText("Active");
+
+        jLabel9.setText("Role(s)");
+
+        jLabel10.setText("Team");
+
+        idField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                idFieldFocusLost(evt);
             }
         });
 
-        parentCheckbox.setText("Parent");
-        parentCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                parentCheckboxActionPerformed(evt);
+        givennameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                givennameFieldFocusLost(evt);
             }
         });
 
-        coachCheckbox.setText("Coach");
-        coachCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coachCheckboxActionPerformed(evt);
+        surnameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                surnameFieldFocusLost(evt);
             }
         });
 
-        jLabel11.setText("Team");
+        emailField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailFieldFocusLost(evt);
+            }
+        });
 
-        teamSelect.addItem("");
-        for (String s : Query.getAllTeams()) {
-            teamSelect.addItem(s);
-        }
+        birthdateField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                birthdateFieldFocusLost(evt);
+            }
+        });
+
+        joindateField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                joindateFieldFocusLost(evt);
+            }
+        });
+
+        activeCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activeCheckBoxActionPerformed(evt);
+            }
+        });
+
+        childCheckBox.setText("Child");
+        childCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                childCheckBoxActionPerformed(evt);
+            }
+        });
+
+        parentCheckBox.setText("Parent");
+        parentCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parentCheckBoxActionPerformed(evt);
+            }
+        });
+
+        coachCheckBox.setText("Coach");
+        coachCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachCheckBoxActionPerformed(evt);
+            }
+        });
+
+        redrawTeamSelect();
         teamSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teamSelectActionPerformed(evt);
             }
         });
 
-        jLabel12.setText("Add new team");
+        jLabel11.setText("Add team");
 
         addTeamButton.setText("Add");
         addTeamButton.addActionListener(new java.awt.event.ActionListener() {
@@ -214,250 +226,148 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        buttonGroup1.add(maleRadioButton);
+        maleRadioButton.setText("Male");
+        maleRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maleRadioButtonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(femaleRadioButton);
+        femaleRadioButton.setText("Female");
+        femaleRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                femaleRadioButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(166, 166, 166)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel7))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel8))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel9)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(joindateField)
+                                .addComponent(birthdateField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(surnameField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(givennameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(activeCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(jLabel9)
+                                .addGap(41, 41, 41)
+                                .addComponent(childCheckBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(idField))
+                                .addComponent(parentCheckBox))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(48, 48, 48)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(surnameField)
-                                            .addComponent(nameField)
-                                            .addComponent(emailField)
-                                            .addComponent(birthdateField)
-                                            .addComponent(joindateField)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(maleRadioField, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(FemaleRadioField))
-                                                    .addComponent(activeField)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                            .addComponent(teamSelect, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                                .addComponent(childCheckbox)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(parentCheckbox)))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(coachCheckbox)
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel12)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(newTeamField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                                .addGap(0, 0, Short.MAX_VALUE))))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(137, 438, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(addTeamButton)
-                                            .addComponent(submitButton))))))))
-                .addContainerGap())
+                                .addComponent(jLabel10)
+                                .addGap(52, 52, 52)
+                                .addComponent(teamSelect, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel11)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(coachCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addTeamField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addTeamButton))
+                    .addComponent(submitButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(38, 38, 38)
+                        .addComponent(maleRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(femaleRadioButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
                     .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(givennameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
                     .addComponent(surnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(maleRadioField)
-                    .addComponent(FemaleRadioField))
-                .addGap(4, 4, 4)
+                    .addComponent(jLabel5)
+                    .addComponent(maleRadioButton)
+                    .addComponent(femaleRadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
                     .addComponent(birthdateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
                     .addComponent(joindateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(activeField))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(activeCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(parentCheckbox)
-                            .addComponent(coachCheckbox)
-                            .addComponent(childCheckbox))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(teamSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)
-                            .addComponent(newTeamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addTeamButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                        .addComponent(submitButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(childCheckBox)
+                    .addComponent(parentCheckBox)
+                    .addComponent(coachCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(teamSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(addTeamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addTeamButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(submitButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
-        this.model.setId(evt.getActionCommand());  
-    }//GEN-LAST:event_idFieldActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         try {
             club.manager.gui.controller.Register.RegisterMember(this.model);
-            System.out.println("Success");
+            resetForm();
         } catch (Exception ex) {
             this.displayError(ex.getMessage());            
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        this.model.setGivenname(evt.getActionCommand());
-    }//GEN-LAST:event_nameFieldActionPerformed
-
-    private void surnameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surnameFieldActionPerformed
-        this.model.setSurname(evt.getActionCommand());
-    }//GEN-LAST:event_surnameFieldActionPerformed
-
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-        this.model.setEmail(evt.getActionCommand());
-    }//GEN-LAST:event_emailFieldActionPerformed
-
-    private void birthdateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdateFieldActionPerformed
-        try {
-            Date d = this.df.parse(evt.getActionCommand());
-            long time = d.getTime();
-            this.model.setBirthdate(time);
-        } catch (ParseException ex) {
-            this.displayError("Invalid date format, the format is: yyyy-MM-dd");            
-        }        
-    }//GEN-LAST:event_birthdateFieldActionPerformed
-
-    private void joindateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joindateFieldActionPerformed
-        try {
-            Date d = this.df.parse(evt.getActionCommand());
-            long time = d.getTime();
-            this.model.setJoindate(time);
-        } catch (ParseException ex) {
-            this.displayError("Invalid date format, the format is: yyyy-MM-dd");            
-        }
-    }//GEN-LAST:event_joindateFieldActionPerformed
-
-    private void activeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activeFieldActionPerformed
-        this.model.setActive(!this.model.isActive());
-    }//GEN-LAST:event_activeFieldActionPerformed
-
-    private void FemaleRadioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FemaleRadioFieldActionPerformed
-        this.model.setGender(Member.Gender.Female.ordinal());
-    }//GEN-LAST:event_FemaleRadioFieldActionPerformed
-
-    private void maleRadioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleRadioFieldActionPerformed
-        this.model.setGender(Member.Gender.Male.ordinal());
-    }//GEN-LAST:event_maleRadioFieldActionPerformed
-
-    private void childCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_childCheckboxActionPerformed
-        Integer child = club.domain.register.Register.Role.Child.ordinal();
-        int index = this.model.getRoles().indexOf(child);
-        if (index == -1) {                
-            this.model.getRoles().add(child);
-        } else {
-            this.model.getRoles().remove(index);        
-        }
-        System.out.println(this.model.getRoles());
-    }//GEN-LAST:event_childCheckboxActionPerformed
-
-    private void parentCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parentCheckboxActionPerformed
-        Integer parent = club.domain.register.Register.Role.Parent.ordinal();
-        int index = this.model.getRoles().indexOf(parent);
-        if (index == -1) {                
-            this.model.getRoles().add(parent);
-        } else {
-            this.model.getRoles().remove(index);        
-        }        
-        System.out.println(this.model.getRoles());
-    }//GEN-LAST:event_parentCheckboxActionPerformed
-
-    private void coachCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachCheckboxActionPerformed
-        Integer coach = club.domain.register.Register.Role.Coach.ordinal();
-        int index = this.model.getRoles().indexOf(coach);
-        if (index == -1) {                
-            this.model.getRoles().add(coach);
-        } else {
-            this.model.getRoles().remove(index);        
-        }       
-        System.out.println(this.model.getRoles());
-    }//GEN-LAST:event_coachCheckboxActionPerformed
-
-    private void teamSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamSelectActionPerformed
-        System.out.println(teamSelect.getSelectedItem());
-        this.model.setTeam((String) teamSelect.getSelectedItem());
-    }//GEN-LAST:event_teamSelectActionPerformed
-
     private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
         try {
-            if (!newTeamField.getText().equals("")) {
-                Query.insertTeam(newTeamField.getText());
-                newTeamField.setText("");
+            if (!addTeamField.getText().equals("")) {
+                Query.insertTeam(addTeamField.getText());
+                addTeamField.setText("");
                 this.redrawTeamSelect();
             } else {
                 this.displayError("New team field must have a value before adding a new team.");
@@ -467,31 +377,86 @@ public class Register extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addTeamButtonActionPerformed
 
-    
-    public static void startGUI() {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Register().setVisible(true);
-            }
-        });
-    }
+    private void idFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_idFieldFocusLost
+        this.model.setId(idField.getText());
+    }//GEN-LAST:event_idFieldFocusLost
+
+    private void givennameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_givennameFieldFocusLost
+        this.model.setGivenname(givennameField.getText());        
+    }//GEN-LAST:event_givennameFieldFocusLost
+
+    private void surnameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_surnameFieldFocusLost
+        this.model.setSurname(surnameField.getText());        
+    }//GEN-LAST:event_surnameFieldFocusLost
+
+    private void emailFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFieldFocusLost
+        this.model.setEmail(emailField.getText());        
+    }//GEN-LAST:event_emailFieldFocusLost
+
+    private void maleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleRadioButtonActionPerformed
+        this.model.setGender(Member.Gender.Male.ordinal());
+    }//GEN-LAST:event_maleRadioButtonActionPerformed
+
+    private void femaleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleRadioButtonActionPerformed
+        this.model.setGender(Member.Gender.Female.ordinal());
+    }//GEN-LAST:event_femaleRadioButtonActionPerformed
+
+    private void birthdateFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_birthdateFieldFocusLost
+        try {
+            Date d = this.df.parse(birthdateField.getText());
+            long time = d.getTime();
+            this.model.setBirthdate(time);
+        } catch (ParseException ex) {
+            this.displayError("Invalid date format, the format is: yyyy-MM-dd");            
+        }        
+    }//GEN-LAST:event_birthdateFieldFocusLost
+
+    private void joindateFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_joindateFieldFocusLost
+        try {
+            Date d = this.df.parse(joindateField.getText());
+            long time = d.getTime();
+            this.model.setBirthdate(time);
+        } catch (ParseException ex) {
+            this.displayError("Invalid date format, the format is: yyyy-MM-dd");            
+        }
+    }//GEN-LAST:event_joindateFieldFocusLost
+
+    private void activeCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activeCheckBoxActionPerformed
+        this.model.setActive(!this.model.isActive());        
+    }//GEN-LAST:event_activeCheckBoxActionPerformed
+
+    private void childCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_childCheckBoxActionPerformed
+        toggleRoles(Member.Role.Child.ordinal());
+    }//GEN-LAST:event_childCheckBoxActionPerformed
+
+    private void parentCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parentCheckBoxActionPerformed
+        toggleRoles(Member.Role.Parent.ordinal());
+    }//GEN-LAST:event_parentCheckBoxActionPerformed
+
+    private void coachCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachCheckBoxActionPerformed
+        toggleRoles(Member.Role.Coach.ordinal());
+    }//GEN-LAST:event_coachCheckBoxActionPerformed
+
+    private void teamSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamSelectActionPerformed
+        this.model.setTeam((String) teamSelect.getSelectedItem());
+    }//GEN-LAST:event_teamSelectActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton FemaleRadioField;
-    private javax.swing.JCheckBox activeField;
+    private javax.swing.JCheckBox activeCheckBox;
     private javax.swing.JButton addTeamButton;
-    private javax.swing.JFormattedTextField birthdateField;
+    private javax.swing.JTextField addTeamField;
+    private javax.swing.JTextField birthdateField;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox childCheckbox;
-    private javax.swing.JCheckBox coachCheckbox;
+    private javax.swing.JCheckBox childCheckBox;
+    private javax.swing.JCheckBox coachCheckBox;
     private javax.swing.JTextField emailField;
+    private javax.swing.JRadioButton femaleRadioButton;
+    private javax.swing.JTextField givennameField;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -500,13 +465,12 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JFormattedTextField joindateField;
-    private javax.swing.JRadioButton maleRadioField;
-    private javax.swing.JTextField nameField;
-    private javax.swing.JTextField newTeamField;
-    private javax.swing.JCheckBox parentCheckbox;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField joindateField;
+    private javax.swing.JRadioButton maleRadioButton;
+    private javax.swing.JCheckBox parentCheckBox;
     private javax.swing.JButton submitButton;
     private javax.swing.JTextField surnameField;
     private javax.swing.JComboBox teamSelect;
