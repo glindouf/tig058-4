@@ -332,9 +332,9 @@ public class Register extends javax.swing.JPanel {
                     .addComponent(jLabel7)
                     .addComponent(joindateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(activeCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(activeCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -357,7 +357,8 @@ public class Register extends javax.swing.JPanel {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         try {
             club.manager.gui.controller.Register.RegisterMember(this.model);
-            resetForm();
+            resetForm();            
+            
         } catch (Exception ex) {
             this.displayError(ex.getMessage());            
         }
@@ -415,7 +416,7 @@ public class Register extends javax.swing.JPanel {
         try {
             Date d = this.df.parse(joindateField.getText());
             long time = d.getTime();
-            this.model.setBirthdate(time);
+            this.model.setJoindate(time);
         } catch (ParseException ex) {
             this.displayError("Invalid date format, the format is: yyyy-MM-dd");            
         }
