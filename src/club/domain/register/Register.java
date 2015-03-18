@@ -6,6 +6,7 @@
 package club.domain.register;
 
 import club.domain.Member;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,19 +16,20 @@ public class Register extends Member {
     
     public Register () {
         super();
+        this.roles = new ArrayList<>();
     }
-     
-    private int[] roles;
+    
+    private ArrayList<Integer> roles;
     private String team;
 
-    public int[] getRoles() {
+    public ArrayList<Integer> getRoles() {
         return roles;
     }
 
-    public void setRoles(int[] roles) {
+    public void setRoles(ArrayList<Integer> roles) {
         this.roles = roles;
     }
-
+   
     public String getTeam() {
         return team;
     }

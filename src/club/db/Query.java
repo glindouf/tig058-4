@@ -27,21 +27,74 @@ public class Query {
     }
     
     /** Insert **/    
-    public static boolean insertMember(Register m) {
+    public static boolean insertMember(Register m) throws Exception {
         try {
+            Connector.connection.setAutoCommit(false);
             Statement stmnt = Connector.connection.createStatement();
             int active = (m.isActive()) ? 1 : 0;
-            String insertquery = String.format("INSERT INTO member values(%s,%s,%s,%s,%d,%d,%d,%d)",
+            boolean hasTeam = m.getTeam() != null && !m.getTeam().equals("");
+            
+            String insertquery = String.format("INSERT INTO member values('%s','%s','%s','%s',%d,%d,%d,%d)",
                     m.getId(), m.getGivenname(), m.getSurname(), m.getEmail(), m.getGender(), m.getBirthdate(), m.getJoindate(), active);
+            stmnt.executeUpdate(insertquery);                                                
+
+            if (hasTeam) {
+                String teamquery = String.format("INSERT INTO team_members values('%s','%s')", m.getTeam(), m.getId());
+                stmnt.executeUpdate(teamquery);
+            }
             
-            String teamquery = String.format("INSERT INTO team_members values(%s,%s)", m.getTeam(), m.getId());
-            stmnt.executeQuery(insertquery);                                                
-            
+            if (!m.getRoles().isEmpty()) {
+                for (Integer i : m.getRoles()) {
+                    switch (i) {
+                        case 0: { // Child
+                            String q = String.format("INSERT INTO child values('%s')", m.getId());
+                            stmnt.executeUpdate(q);
+                            break;
+                        }
+                        case 1: { // Parent
+                            String q = String.format("INSERT INTO parent values('%s')", m.getId());
+                            stmnt.executeUpdate(q);
+                            break;
+                        }
+                        case 2: { // Coach 
+                            if (!hasTeam) {
+                                Connector.connection.rollback();
+                                Connector.connection.setAutoCommit(true);
+                                Exception ex = new Exception("Coach must have a team", null);
+                                throw ex;
+                            }
+                            String q = String.format("INSERT INTO coach values('%s','%s')", m.getId(), m.getTeam());
+                            stmnt.executeUpdate(q);
+                            break;
+                        }
+                    }
+                }
+            }            
         } catch (SQLException e) {
+            System.out.println(e);
+            Connector.connection.rollback();
+            Connector.connection.setAutoCommit(true);
             return false;
         }
+        Connector.connection.commit();
+        Connector.connection.setAutoCommit(true);
         return true;
     }
+    
+    public static void insertTeam(String team) throws SQLException {
+        try {
+            Connector.connection.setAutoCommit(false);
+            Statement stmnt = Connector.connection.createStatement();
+            String query = String.format("INSERT INTO team values('%s')", team);
+            
+            stmnt.executeUpdate(query);
+            Connector.connection.commit();
+        } catch (SQLException e) {
+            Connector.connection.rollback();
+            throw e;
+        }
+    }
+    
     /** Update **/
     public static boolean updateMember(Register m) {        
         try {
@@ -60,7 +113,23 @@ public class Query {
     }
     
     
-    /** Search **/
+    /** Search
+     * @return teams - The ArrayList<String> of all the teams in the database. **/
+    public static ArrayList<String> getAllTeams() {
+        ArrayList<String> teams = new ArrayList<>();
+        try {
+            Statement stmnt = Connector.connection.createStatement();
+            String query = String.format("SELECT name FROM team");
+            ResultSet rs = stmnt.executeQuery(query);
+            
+            while (rs.next()) {
+                teams.add(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return teams;
+    }
     
     public static Member getMemberWithId(String id) {
        Member m = new Member();

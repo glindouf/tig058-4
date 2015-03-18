@@ -14,7 +14,11 @@ public class Register {
         
         public static void RegisterMember(club.domain.register.Register model) throws Exception {
         if (model.validate()) {
-            
+            try {
+                Query.insertMember(model);
+            } catch (Exception e) {
+                throw e;
+            }
         } else {
             Exception ex = new Exception("All fields must have values", null);
             throw ex;
