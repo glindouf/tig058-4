@@ -2,6 +2,7 @@ package club.db;
 
 import club.domain.Member;
 import club.domain.register.Register;
+import club.domain.update.Update;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,9 +11,16 @@ import java.util.ArrayList;
 /**
  *
  * @author phcr
+ * @author jole
  */
 public class Query {
     
+    /**
+     * 
+     * @param rs - A Member ResultSet from an SQL Query.
+     * @return A Member object with all the results.
+     * @throws SQLException 
+     */
     public static Member memberFromRS(ResultSet rs) throws SQLException {
         Member m = new Member();
         m.setId(rs.getString("id"));
@@ -25,8 +33,13 @@ public class Query {
         m.setActive(rs.getBoolean("active"));
         return m;
     }
-    
-    /** Insert **/    
+        
+    /**
+     * Inserts a new Member into the Database. Uses Transaction to perform rollback if an error occurs.
+     * @param m - A validated Register model ready for insertion
+     * @return A boolean if it was successful or not.
+     * @throws Exception - Insertion exceptions.
+     */
     public static boolean insertMember(Register m) throws Exception {
         try {
             Connector.connection.setAutoCommit(false);
@@ -178,6 +191,47 @@ public class Query {
             System.out.println(e);
         }
         
+        return members;
+    }
+    
+    public static ArrayList<Update> getAllMemberValues() {
+        ArrayList<Update> members = new ArrayList<>();
+        ArrayList<Member> am = new ArrayList<>();
+        am = getAllMembers();
+        for (Member m : am) {
+            Update u = new Update();
+            ArrayList<Integer> roles = new ArrayList<>();
+            ArrayList<String> teams = new ArrayList<>();
+            
+            if (isChild(m.getId())) {
+                roles.add(0);
+            }
+            if (isParent(m.getId())) {
+                roles.add(1);
+            }
+            if (isCoach(m.getId())) {
+                roles.add(2);
+            }
+            
+            if (!roles.isEmpty()) {
+                u.setRoles(roles);
+            }
+            
+            teams = getMemberTeamWithId(m.getId());
+            if (!teams.isEmpty()) {
+                u.setTeam(teams.get(0));
+            }
+            
+            u.setId(m.getId());
+            u.setGivenname(m.getGivenname());
+            u.setSurname(m.getSurname());
+            u.setEmail(m.getEmail());
+            u.setGender(m.getGender());
+            u.setBirthdate(m.getBirthdate());
+            u.setJoindate(m.getJoindate());
+            u.setActive(m.isActive());            
+            members.add(u);
+        }             
         return members;
     }
     
@@ -339,5 +393,5 @@ public class Query {
             System.out.println(e);
         }        
         return ts;
-    }
+    }   
 }
