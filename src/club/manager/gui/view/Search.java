@@ -58,7 +58,7 @@ public class Search extends javax.swing.JPanel {
         searchCoachPanelLayout.setHorizontalGroup(
             searchCoachPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchCoachPanelLayout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
+                .addContainerGap(140, Short.MAX_VALUE)
                 .addComponent(searchTeams)
                 .addGap(109, 109, 109))
             .addGroup(searchCoachPanelLayout.createSequentialGroup()
@@ -106,7 +106,7 @@ public class Search extends javax.swing.JPanel {
                         .addComponent(listByPnrBtn)
                         .addGap(41, 41, 41)
                         .addComponent(listBySurnameBtn)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         listMembersPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {listByPnrBtn, listBySurnameBtn});
@@ -142,7 +142,7 @@ public class Search extends javax.swing.JPanel {
                     .addGroup(listTeamsPanelLayout.createSequentialGroup()
                         .addGap(167, 167, 167)
                         .addComponent(listTeamsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         listTeamsPanelLayout.setVerticalGroup(
             listTeamsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,19 +185,17 @@ public class Search extends javax.swing.JPanel {
         changeMembersPanelLayout.setHorizontalGroup(
             changeMembersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(changeMembersPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(changeMembersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(orLabel)
-                    .addGroup(changeMembersPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(changeMembersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnrLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(surnameLabel, javax.swing.GroupLayout.Alignment.TRAILING))))
+                    .addComponent(pnrLabel)
+                    .addComponent(surnameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(changeMembersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(searchMember, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(surnameText)
                     .addComponent(pnrText, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         changeMembersPanelLayout.setVerticalGroup(
             changeMembersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +223,7 @@ public class Search extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
